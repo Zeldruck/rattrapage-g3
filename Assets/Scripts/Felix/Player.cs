@@ -10,8 +10,9 @@ public class Player : MonoBehaviour
     private float timerH = 0f;
     private float timerV = 0f;
 
+    [HideInInspector] public bool invincible = false;
+
     public float forceMovement;
-    public float gravity;
     public Vector2 windForce;
 
     // Start is called before the first frame update
@@ -35,10 +36,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (timerV <= 0f || isDown)
-            rb.velocity += (Vector2)transform.up * gravity * Time.fixedDeltaTime;
-
-        rb.velocity += windForce * Time.fixedDeltaTime;
+        rb.velocity += new Vector2(windForce.x, timerV <= 0f || isDown ? windForce.y : 0f) * Time.fixedDeltaTime;
 
         if ((timerH <= 0f || timerV <= 0) && (direction.x != 0f || direction.y != 0f))
         {

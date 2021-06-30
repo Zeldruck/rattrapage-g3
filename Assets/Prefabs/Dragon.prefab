@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6673585983033746183}
   - component: {fileID: 6673585983033746181}
   - component: {fileID: 6673585983033746179}
+  - component: {fileID: 2566198487052443548}
   - component: {fileID: 6673585983033746180}
   m_Layer: 0
   m_Name: Dragon
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 1372335161102834277, guid: f9db08bf79b16554e8fa19b5485d40a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -126,6 +127,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &2566198487052443548
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6673585983033746232}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.038189888, y: -0.00000023841858}
+  m_Size: {x: 0.6239189, y: 1.1076591}
+  m_Direction: 0
 --- !u!114 &6673585983033746180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +156,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootTransform: {fileID: 6673585983379482301}
-  fireballPrefab: {fileID: 0}
+  fireballPrefab: {fileID: 5822616803212925761, guid: 991eaa7be10f13f498ed3f9702f63ff8, type: 3}
+  player: {fileID: 0}
+  health: 50
+  healthbar: {fileID: 0}
+  distanceAttack1: 17
+  cooldownAttack1: 2
+  fireballSpeedAttack1: 5
+  distanceAttack2: 17
+  cooldownAttack2: 2
+  fireballSpeedAttack2: 5
 --- !u!1 &6673585983379482302
 GameObject:
   m_ObjectHideFlags: 0
