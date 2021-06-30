@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -9,11 +10,18 @@ public class Player : MonoBehaviour
     private bool isDown = false;
     private float timerH = 0f;
     private float timerV = 0f;
+    private float timerProjectile = 0f;
+    private bool shoot = false;
 
     [HideInInspector] public bool invincible = false;
 
+    public int life;
     public float forceMovement;
     public Vector2 windForce;
+    [Space]
+    public GameObject projectilePrefab;
+    public float projectileSpeed;
+    public float projectileCooldown;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +40,14 @@ public class Player : MonoBehaviour
 
         if (timerV > 0f)
             timerV -= Time.deltaTime;
+
+        if (timerProjectile > 0f)
+            timerProjectile -= Time.deltaTime;
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            shoot = true;
+            timerProjectile = projectileCooldown;
+        }
     }
 
     private void FixedUpdate()
@@ -57,6 +73,34 @@ public class Player : MonoBehaviour
 
             if (timerV <= 0f && direction.y != 0f)
                 timerV = 1f;
+        }
+
+        if (shoot)
+        {
+            Shoot();
+            shoot = false;
+        }
+    }
+
+    private void Shoot()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(transform.localScale.x / 2f, 0f, 0f), Quaternion.identity);
+        projectile.GetComponent<Rigidbody2D>().velocity = transform.right * projectileSpeed * Time.fixedDeltaTime;
+        Destroy(projectile, 5f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+            life--;
+
+            if (life <= 0)
+            {
+                Destroy(this);
+                SceneManager.LoadSceneAsync(0);
+            }
         }
     }
 }

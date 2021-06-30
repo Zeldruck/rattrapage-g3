@@ -16,9 +16,19 @@ public class DragonP1 : MonoBehaviour
     private float timerGeneral = .5f;
     private int attackChoosed = 0;
 
+    private float lastPosition;
+    private float nextPosition;
+    private float timerMoving;
+    private float timerMovingLerp;
+
     private float startHealth;
     public float health;
     public Image healthbar;
+
+    [Header("Move")]
+    public Vector2 movingRangeY;
+    public Vector2 cooldownMovingRange;
+    public float speed;
 
     [Header("Attack1")]
     public float distanceAttack1;
@@ -36,6 +46,9 @@ public class DragonP1 : MonoBehaviour
         animator = GetComponent<Animator>();
 
         startHealth = health;
+
+        timerMoving = Random.Range(cooldownMovingRange.x, cooldownMovingRange.y);
+        timerMovingLerp = 0f;
     }
 
     void Update()
@@ -63,7 +76,33 @@ public class DragonP1 : MonoBehaviour
             attackChoosed = Random.Range(1, 3);
         }
 
+        if (timerMoving > 0f)
+            timerMoving -= Time.deltaTime;
+
         healthbar.fillAmount = health / startHealth;
+    }
+
+    private void FixedUpdate()
+    {
+        if (timerMoving <= 0f)
+        {
+            if (timerMovingLerp <= 0f)
+            {
+                lastPosition = rb.position.y;
+                nextPosition = Random.Range(-movingRangeY.y / 2f, movingRangeY.y / 2f);
+            }
+
+            timerMovingLerp += Time.fixedDeltaTime * speed;
+
+            Vector2 nPos = new Vector2(rb.position.x, Mathf.Lerp(lastPosition, nextPosition, timerMovingLerp));
+            rb.MovePosition(nPos);
+
+            if (timerMovingLerp >= 1f)
+            {
+                timerMoving = Random.Range(cooldownMovingRange.x, cooldownMovingRange.y); ;
+                timerMovingLerp = 0f;
+            }
+        }
     }
 
     // Tir en direction du joueur
@@ -99,7 +138,7 @@ public class DragonP1 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("PlayerProjectile"))
         {
             health--;
 
@@ -110,9 +149,12 @@ public class DragonP1 : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distanceAttack1);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector3(movingRangeY.x, 0f, 0f), new Vector3(1f, movingRangeY.y, 0f));
     }
 }

@@ -6,6 +6,9 @@ public class WeatherManager : MonoBehaviour
 {
     private float weatherTimer = 0f;
     private float lightningTimer = 0f;
+    private float cameraTimer = 0f;
+    private float cameraSpeed = 0f;
+    private float cameraDirection = 1f;
 
     [Header("Weather")]
     public float weatherChangeTime;
@@ -22,8 +25,10 @@ public class WeatherManager : MonoBehaviour
     void Start()
     {
         weatherTimer = weatherChangeTime;
+        lightningTimer = lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y); ;
 
         WindChangeDirection();
+        cameraSpeed = Random.Range(0.2f, 1f);
     }
 
     // Update is called once per frame
@@ -44,6 +49,19 @@ public class WeatherManager : MonoBehaviour
             lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y);
             SpawnLightning();
         }
+
+        if (cameraTimer >= 1f)
+        {
+            cameraTimer = 0f;
+            cameraDirection *= -1f;
+            cameraSpeed = Random.Range(0.1f, 0.25f);
+        }
+        else
+        {
+            cameraTimer += Time.deltaTime * cameraSpeed;
+            Vector3 camPos = new Vector3(Mathf.Lerp(-0.4f * cameraDirection, 0.4f * cameraDirection, cameraTimer), 0f, Camera.main.transform.position.z); ;
+            Camera.main.transform.position = camPos;
+        }
     }
 
     private void WindChangeDirection()
@@ -56,7 +74,8 @@ public class WeatherManager : MonoBehaviour
         rainParticles.transform.position = new Vector3(nPos, rainParticles.transform.position.y, rainParticles.transform.position.z);
         rainParticles.transform.rotation = Quaternion.Euler(0f, 0f, wind.x * 100f);
 
-        player.windForce = wind;
+        if (player != null)
+            player.windForce = wind;
     }
 
     private void SpawnLightning()
@@ -66,6 +85,7 @@ public class WeatherManager : MonoBehaviour
         spawnFlash.y = lightningSpawnRangeX.y;
 
         GameObject cloud = Instantiate(cloudPrefab, spawnFlash, Quaternion.identity);
+        Destroy(cloud, 3f);
     }
 
     private void OnDrawGizmosSelected()
