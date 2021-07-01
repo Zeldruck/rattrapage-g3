@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DragonP1 : MonoBehaviour
@@ -143,6 +144,8 @@ public class DragonP1 : MonoBehaviour
         Destroy(player.GetComponent<Player>());
         Destroy(player.GetComponent<Collider2D>());
         Destroy(gameObject);
+
+        SceneManager.LoadSceneAsync("Nicolas");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
