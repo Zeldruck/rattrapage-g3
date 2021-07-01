@@ -10,6 +10,9 @@ public class WeatherManager : MonoBehaviour
     private float cameraSpeed = 0f;
     private float cameraDirection = 1f;
 
+    public bool activeLightning = false;
+    public bool activeCamera = false;
+
     [Header("Weather")]
     public float weatherChangeTime;
     public GameObject cloudPrefab;
@@ -25,10 +28,14 @@ public class WeatherManager : MonoBehaviour
     void Start()
     {
         weatherTimer = weatherChangeTime;
-        lightningTimer = lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y); ;
+
+        if (activeLightning)
+            lightningTimer = lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y); ;
 
         WindChangeDirection();
-        cameraSpeed = Random.Range(0.2f, 1f);
+
+        if (activeCamera)
+            cameraSpeed = Random.Range(0.2f, 1f);
     }
 
     // Update is called once per frame
@@ -42,25 +49,31 @@ public class WeatherManager : MonoBehaviour
             WindChangeDirection();
         }
 
-        if (lightningTimer > 0f)
-            lightningTimer -= Time.deltaTime;
-        else
+        if (activeLightning)
         {
-            lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y);
-            SpawnLightning();
+            if (lightningTimer > 0f)
+                lightningTimer -= Time.deltaTime;
+            else
+            {
+                lightningTimer = Random.Range(lightningRangeTime.x, lightningRangeTime.y);
+                SpawnLightning();
+            }
         }
 
-        if (cameraTimer >= 1f)
+        if (activeCamera)
         {
-            cameraTimer = 0f;
-            cameraDirection *= -1f;
-            cameraSpeed = Random.Range(0.1f, 0.25f);
-        }
-        else
-        {
-            cameraTimer += Time.deltaTime * cameraSpeed;
-            Vector3 camPos = new Vector3(Mathf.Lerp(-0.4f * cameraDirection, 0.4f * cameraDirection, cameraTimer), 0f, Camera.main.transform.position.z); ;
-            Camera.main.transform.position = camPos;
+            if (cameraTimer >= 1f)
+            {
+                cameraTimer = 0f;
+                cameraDirection *= -1f;
+                cameraSpeed = Random.Range(0.1f, 0.25f);
+            }
+            else
+            {
+                cameraTimer += Time.deltaTime * cameraSpeed;
+                Vector3 camPos = new Vector3(Mathf.Lerp(-0.4f * cameraDirection, 0.4f * cameraDirection, cameraTimer), 0f, Camera.main.transform.position.z); ;
+                Camera.main.transform.position = camPos;
+            }
         }
     }
 

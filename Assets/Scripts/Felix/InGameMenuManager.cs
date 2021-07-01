@@ -22,6 +22,9 @@ public class InGameMenuManager : MonoBehaviour
         loseMenu.SetActive(false);
         //winMenu.SetActive(false);
         Time.timeScale = 1f;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     // Update is called once per frame
@@ -41,6 +44,8 @@ public class InGameMenuManager : MonoBehaviour
             pauseMenu.SetActive(true);
             isPause = true;
 
+            Cursor.visible = true;
+
             if (ascThunder != null && ascThunder.isPlaying)
             {
                 ascThunder.Pause();
@@ -51,6 +56,8 @@ public class InGameMenuManager : MonoBehaviour
             Time.timeScale = 1f;
             pauseMenu.SetActive(false);
             isPause = false;
+
+            Cursor.visible = false;
 
             if (ascThunder != null)
             {
@@ -64,10 +71,13 @@ public class InGameMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         isLose = true;
         loseMenu.SetActive(true);
+
+        Cursor.visible = true;
     }
 
     public void BackToMenu(string scene)
     {
+        Time.timeScale = 1f;
         SceneManager.LoadSceneAsync(scene);
     }
 
@@ -81,5 +91,6 @@ public class InGameMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         isWin = true;
         winMenu.SetActive(true);
+        Cursor.visible = true;
     }
 }

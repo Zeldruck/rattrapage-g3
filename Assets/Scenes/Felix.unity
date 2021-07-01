@@ -1990,6 +1990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a04e96db2b9038468206663160e333f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeLightning: 1
+  activeCamera: 1
   weatherChangeTime: 15
   cloudPrefab: {fileID: 9126514885549959857, guid: 6ad3454d6461f7f44a2ce426abceeb7e, type: 3}
   lightningRangeTime: {x: 10, y: 20}
@@ -8017,6 +8019,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 578385131188218910, guid: d5957c6d6324bcd479bfb5911f7e67b8, type: 3}
+      propertyPath: life
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5957c6d6324bcd479bfb5911f7e67b8, type: 3}
 --- !u!1001 &6673585981716144615
@@ -8028,7 +8034,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6673585983033746180, guid: 8c92d25fd62fa6e4ea585b0fa7a2886b, type: 3}
       propertyPath: health
-      value: 25
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 6673585983033746180, guid: 8c92d25fd62fa6e4ea585b0fa7a2886b, type: 3}
       propertyPath: player
