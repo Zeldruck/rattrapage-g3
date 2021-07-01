@@ -8,8 +8,9 @@ public class LightningLife : MonoBehaviour
     public GameObject spot;
     public GameObject lightning;
 
-    public float time = 0;
+    float time = 0;
     float onOff = 0.25f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +42,7 @@ public class LightningLife : MonoBehaviour
             GameObject.Destroy(prefab);
             //Debug.Log("j'ai juste envie de te faire chier");
         }
+
 
     }
 }

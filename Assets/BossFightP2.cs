@@ -36,7 +36,7 @@ public class BossFightP2 : MonoBehaviour
     void Start()
     {
         time = Random.Range(parts[intPart].timeEventMin, parts[intPart].timeEventMax + 1);
-        flash.GetComponent<Renderer>().material.color = new Vector4(255, 255, 255, 0);
+        //flash.GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 0);
     }
 
     // Update is called once per frame
@@ -170,19 +170,11 @@ public class BossFightP2 : MonoBehaviour
 
     public IEnumerator Flash()
     {
-        float light = 0;
-        while(light<255)
-        {
-            light += Time.deltaTime * 255;
-            flash.GetComponent<Renderer>().material.color = new Vector4(255, 255, 255, light);
-            Debug.Log("up");
-        }
-        while(light>0)
-        {
-            light -= Time.deltaTime * 255;
-            flash.GetComponent<Renderer>().material.color = new Vector4(255, 255, 255, light);
-            Debug.Log("down");
-        }
+        Debug.Log("start corutine");
+        yield return new WaitForSeconds(3f);
+        flash.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        flash.SetActive(false);
         yield return null;
     }
 }
