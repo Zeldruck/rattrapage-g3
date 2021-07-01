@@ -7,6 +7,7 @@ public class DragonP1 : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource asc;
 
     public Transform shootTransform;
     public GameObject fireballPrefab;
@@ -44,6 +45,7 @@ public class DragonP1 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        asc = GameObject.Find("Audio SourceDragon").GetComponent<AudioSource>();
 
         startHealth = health;
 
@@ -135,9 +137,12 @@ public class DragonP1 : MonoBehaviour
 
     private void Dead()
     {
-        Destroy(gameObject);
+        if (asc != null)
+            asc.Play();
+
         Destroy(player.GetComponent<Player>());
         Destroy(player.GetComponent<Collider2D>());
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
