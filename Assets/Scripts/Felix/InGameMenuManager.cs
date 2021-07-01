@@ -20,7 +20,7 @@ public class InGameMenuManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         loseMenu.SetActive(false);
-        winMenu.SetActive(false);
+        //winMenu.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -66,9 +66,9 @@ public class InGameMenuManager : MonoBehaviour
         loseMenu.SetActive(true);
     }
 
-    public void BackToMenu()
+    public void BackToMenu(string scene)
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync(scene);
     }
 
     public void Retry(string scene)
