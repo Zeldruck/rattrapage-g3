@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Cloud : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private AudioSource asc;
+
+    private void Awake()
     {
-        
+        asc = GameObject.Find("Audio SourceThunder").GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void PlayThunderSound()
     {
-        
+        if (asc != null)
+            asc.Play();
     }
 }

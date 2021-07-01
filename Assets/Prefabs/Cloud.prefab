@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 5803344740453613170}
   - component: {fileID: 188986784635947066}
   - component: {fileID: 2997051103956855991}
+  - component: {fileID: 7536159462887610022}
   m_Layer: 0
   m_Name: Cloud
   m_TagString: Untagged
@@ -225,3 +226,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7536159462887610022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126514885549959857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43558a3ce4aa00429702144c445bc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

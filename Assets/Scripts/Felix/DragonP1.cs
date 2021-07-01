@@ -53,33 +53,36 @@ public class DragonP1 : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(player.position, transform.position);
-
-        if (distance <= distanceAttack1 && attackChoosed == 1)
+        if (player != null)
         {
-            Attack1();
-            timerGeneral = cooldownAttack1;
-            attackChoosed = 0;
+            float distance = Vector3.Distance(player.position, transform.position);
+
+            if (distance <= distanceAttack1 && attackChoosed == 1)
+            {
+                Attack1();
+                timerGeneral = cooldownAttack1;
+                attackChoosed = 0;
+            }
+
+            if (distance <= distanceAttack2 && attackChoosed == 2)
+            {
+                Attack2();
+                timerGeneral = cooldownAttack2;
+                attackChoosed = 0;
+            }
+
+            if (timerGeneral > 0f)
+                timerGeneral -= Time.deltaTime;
+            else
+            {
+                attackChoosed = Random.Range(1, 3);
+            }
+
+            if (timerMoving > 0f)
+                timerMoving -= Time.deltaTime;
+
+            healthbar.fillAmount = health / startHealth;
         }
-
-        if (distance <= distanceAttack2 && attackChoosed == 2)
-        {
-            Attack2();
-            timerGeneral = cooldownAttack2;
-            attackChoosed = 0;
-        }
-
-        if (timerGeneral > 0f)
-            timerGeneral -= Time.deltaTime;
-        else
-        {
-            attackChoosed = Random.Range(1, 3);
-        }
-
-        if (timerMoving > 0f)
-            timerMoving -= Time.deltaTime;
-
-        healthbar.fillAmount = health / startHealth;
     }
 
     private void FixedUpdate()
@@ -133,13 +136,16 @@ public class DragonP1 : MonoBehaviour
     private void Dead()
     {
         Destroy(gameObject);
-        player.GetComponent<Player>().invincible = true;
+        Destroy(player.GetComponent<Player>());
+        Destroy(player.GetComponent<Collider2D>());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerProjectile"))
         {
+            Destroy(collision.gameObject);
+
             health--;
 
             if (health <= 0)

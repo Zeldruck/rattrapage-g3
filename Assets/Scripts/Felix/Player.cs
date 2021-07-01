@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private AudioSource asc;
     private Vector2 direction;
     private bool isDown = false;
     private float timerH = 0f;
@@ -22,11 +23,14 @@ public class Player : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileSpeed;
     public float projectileCooldown;
+    [Space]
+    public GameObject[] hearts;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        asc = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,13 +70,24 @@ public class Player : MonoBehaviour
                 isDown = true;
             }
 
+
             rb.AddForce(new Vector2(timerH <= 0f ? direction.x : 0f, timerV <= 0f ? direction.y : 0f) * forceMovement * Time.fixedDeltaTime);
 
             if (timerH <= 0f && direction.x != 0f)
+            {
                 timerH = 1f;
 
+                if (asc != null)
+                    asc.Play();
+            }
+
             if (timerV <= 0f && direction.y != 0f)
+            {
                 timerV = 1f;
+
+                if (asc != null)
+                    asc.Play();
+            }
         }
 
         if (shoot)
@@ -84,7 +99,7 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(transform.localScale.x / 2f, 0f, 0f), Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f, 0f, 0f), Quaternion.identity);
         projectile.GetComponent<Rigidbody2D>().velocity = transform.right * projectileSpeed * Time.fixedDeltaTime;
         Destroy(projectile, 5f);
     }
@@ -96,10 +111,13 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             life--;
 
+            if (life < hearts.Length)
+                hearts[life].SetActive(false);
+
             if (life <= 0)
             {
-                Destroy(this);
-                SceneManager.LoadSceneAsync(0);
+                FindObjectOfType<InGameMenuManager>().Lose();
+                Destroy(gameObject);
             }
         }
     }

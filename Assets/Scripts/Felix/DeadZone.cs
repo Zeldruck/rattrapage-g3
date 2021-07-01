@@ -9,8 +9,8 @@ public class DeadZone : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Destroy(collision.GetComponent<Player>());
-            SceneManager.LoadSceneAsync(0);
+            Destroy(collision.gameObject);
+            FindObjectOfType<InGameMenuManager>().Lose();
         }
     }
 }

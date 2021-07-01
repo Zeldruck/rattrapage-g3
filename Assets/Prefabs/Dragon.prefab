@@ -160,6 +160,9 @@ MonoBehaviour:
   player: {fileID: 0}
   health: 50
   healthbar: {fileID: 0}
+  movingRangeY: {x: 7, y: 6}
+  cooldownMovingRange: {x: 3, y: 10}
+  speed: 1
   distanceAttack1: 17
   cooldownAttack1: 2
   fireballSpeedAttack1: 5
