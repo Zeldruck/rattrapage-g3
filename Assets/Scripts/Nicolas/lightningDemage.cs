@@ -22,7 +22,7 @@ public class lightningDemage : MonoBehaviour
             if (collision.tag == "Player")
             {
                 Debug.Log("is player");
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().life -= degat;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().life--;
             }
     }
 

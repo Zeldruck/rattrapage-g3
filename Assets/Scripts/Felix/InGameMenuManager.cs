@@ -7,9 +7,12 @@ public class InGameMenuManager : MonoBehaviour
 {
     private bool isPause = false;
     private bool isLose = false;
+    private bool isWin = false;
 
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject winMenu;
+
     [Space]
     public AudioSource ascThunder;
 
@@ -17,7 +20,7 @@ public class InGameMenuManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         loseMenu.SetActive(false);
-
+        winMenu.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -71,5 +74,12 @@ public class InGameMenuManager : MonoBehaviour
     public void Retry(string scene)
     {
         SceneManager.LoadSceneAsync(scene);
+    }
+
+    public void Win()
+    {
+        Time.timeScale = 0f;
+        isWin = true;
+        winMenu.SetActive(true);
     }
 }

@@ -11,6 +11,7 @@ public class BossFightP2 : MonoBehaviour
     public GameObject dragonPrefab;
 
     public GameObject flash;
+    public AudioClip clip;
 
     [Header("Part")]
     public part[] parts;
@@ -71,6 +72,11 @@ public class BossFightP2 : MonoBehaviour
                 {
                     intPart++;
                     StartCoroutine(Flash());
+                }
+                else
+                {
+                    StartCoroutine(Win());
+                    //GameObject.Find("CanvasScreen").GetComponent<InGameMenuManager>().Win();
                 }
                 
                 action = false;
@@ -172,9 +178,15 @@ public class BossFightP2 : MonoBehaviour
     {
         Debug.Log("start corutine");
         yield return new WaitForSeconds(3f);
+        AudioSource.PlayClipAtPoint(clip,new Vector3(0,0,0));
         flash.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         flash.SetActive(false);
         yield return null;
+    }
+    public IEnumerator Win()
+    {
+        yield return new WaitForSeconds(4f);
+        GameObject.Find("CanvasScreen").GetComponent<InGameMenuManager>().Win();
     }
 }
