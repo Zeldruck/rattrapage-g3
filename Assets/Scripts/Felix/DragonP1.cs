@@ -145,7 +145,7 @@ public class DragonP1 : MonoBehaviour
         Destroy(player.GetComponent<Collider2D>());
         Destroy(gameObject);
 
-        SceneManager.LoadSceneAsync("Nicolas");
+        FindObjectOfType<InGameMenuManager>().Win();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

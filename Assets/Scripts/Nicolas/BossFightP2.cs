@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossFightP2 : MonoBehaviour
 {
@@ -187,6 +188,6 @@ public class BossFightP2 : MonoBehaviour
     public IEnumerator Win()
     {
         yield return new WaitForSeconds(4f);
-        GameObject.Find("CanvasScreen").GetComponent<InGameMenuManager>().Win();
+        SceneManager.LoadScene("Felix");
     }
 }
